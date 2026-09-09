@@ -128,7 +128,7 @@ export function buildPortfolioRows(
   });
 }
 
-export function calculateSummary(
+export function calculatePortfolioSummary(
   rows: PortfolioRow[],
 ): PortfolioSummary {
   const totalInvestment = rows.reduce(
@@ -184,7 +184,7 @@ export function calculateSectorSummaries(
 
     return {
       sector,
-      ...calculateSummary(sectorRows),
+      ...calculatePortfolioSummary(sectorRows),
     };
   });
 }
