@@ -1,25 +1,64 @@
 import { holdings } from "@/data/holdings";
+import { getGoogleFundamentals } from "@/lib/googleFinance";
 import {
   buildPortfolioRows,
   calculatePortfolioSummary,
   calculateSectorSummaries,
 } from "@/lib/portfolioCalculations";
 import { getYahooMarketData } from "@/lib/yahooFinance";
+import type { MarketData } from "@/types/market";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const symbols = holdings.map(
+    const yahooSymbols = holdings.map(
       (holding) => holding.yahooSymbol,
     );
 
-    const marketData = await getYahooMarketData(symbols);
+    const googleSymbols = holdings.map(
+      (holding) => holding.googleSymbol,
+    );
+
+    const [yahooMarketData, googleFundamentals] =
+      await Promise.all([
+        getYahooMarketData(yahooSymbols),
+        getGoogleFundamentals(googleSymbols),
+      ]);
+
+    const combinedMarketData: Record<string, MarketData> =
+      Object.fromEntries(
+        holdings.map((holding) => {
+          const priceData =
+            yahooMarketData[holding.yahooSymbol];
+
+          const fundamentalData =
+            googleFundamentals[holding.googleSymbol];
+
+          const errors = [
+            priceData?.error,
+            fundamentalData?.error,
+          ].filter(Boolean);
+
+          const marketData: MarketData = {
+            ...priceData,
+            peRatio: fundamentalData?.peRatio ?? null,
+            latestEarnings:
+              fundamentalData?.latestEarnings ?? null,
+            error:
+              errors.length > 0
+                ? errors.join("; ")
+                : undefined,
+          };
+
+          return [holding.yahooSymbol, marketData];
+        }),
+      );
 
     const rows = buildPortfolioRows(
       holdings,
-      marketData,
+      combinedMarketData,
     );
 
     const summary =
@@ -35,6 +74,7 @@ export async function GET() {
         sectors,
         meta: {
           source: "Yahoo Finance",
+          fundamentalsSource: "Google Finance",
           requestedAt: new Date().toISOString(),
           refreshIntervalSeconds: 15,
         },

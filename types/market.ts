@@ -44,8 +44,17 @@ export interface PortfolioApiResponse {
   summary: PortfolioSummary;
   sectors: SectorSummary[];
   meta: {
-    source: string;
-    requestedAt: string | null;
-    refreshIntervalSeconds: number;
+  source: string;
+  fundamentalsSource?: string;
+  requestedAt: string | null;
+  refreshIntervalSeconds: number;
   };
+}
+
+export interface FundamentalData {
+  peRatio: number | null;
+  latestEarnings: number | null;
+  fetchedAt: string | null;
+  status: DataStatus;
+  error?: string;
 }
