@@ -38,3 +38,14 @@ export interface PortfolioSummary {
 export interface SectorSummary extends PortfolioSummary {
   sector: Sector;
 }
+
+export interface PortfolioApiResponse {
+  rows: PortfolioRow[];
+  summary: PortfolioSummary;
+  sectors: SectorSummary[];
+  meta: {
+    source: string;
+    requestedAt: string | null;
+    refreshIntervalSeconds: number;
+  };
+}

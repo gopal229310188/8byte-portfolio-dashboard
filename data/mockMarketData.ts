@@ -21,11 +21,11 @@ export const mockMarketDataBySymbol: Record<string, MarketData> = {
   "BAJFINANCE.NS": createMockMarketData(8419.6, 32.63, 257.8),
   "ICICIBANK.NS": createMockMarketData(1215.5, 17.68, 68.72),
   "BAJAJHFL.NS": createMockMarketData(112.85, 85.72, 2.53),
-  "SAVFI.BO": createMockMarketData(14.86, null, null),
+  "511577.BO": createMockMarketData(14.86, null, null),
 
   // Technology Sector
   "AFFLE.NS": createMockMarketData(1459.6, 55.53, 26.11),
-  "LTIM.NS": createMockMarketData(4793.8, 34.69, 145.92),
+  "LTM.NS": createMockMarketData(4793.8, 34.69, 145.92),
   "KPITTECH.NS": createMockMarketData(1293.1, 46.57, 27.77),
   "TATATECH.NS": createMockMarketData(662, 41.68, 15.88),
   "BLSE.NS": createMockMarketData(152.9, 26.3, 5.8),
