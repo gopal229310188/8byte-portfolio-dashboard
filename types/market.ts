@@ -1,6 +1,11 @@
 import type { PortfolioHolding, Sector } from "@/types/portfolio";
 
-export type DataStatus = "live" | "cached" | "stale" | "unavailable";
+export type DataStatus =
+  | "live"
+  | "cached"
+  | "stale"
+  | "mock"
+  | "unavailable";
 
 export interface MarketData {
   cmp: number | null;
