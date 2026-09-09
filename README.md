@@ -343,10 +343,8 @@ A failed request for one holding does not prevent the remaining portfolio from l
 
 The project is designed for deployment on Vercel.
 
-After deployment, add the production URL here:
-
 ```text
-Deployment URL: To be added
+Deployment URL: [https://8byte-portfolio-dashboard-tau.vercel.app/](https://8byte-portfolio-dashboard-tau.vercel.app/)
 ```
 
 ## Author
